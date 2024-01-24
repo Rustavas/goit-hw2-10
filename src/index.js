@@ -1,13 +1,21 @@
 // import { fetchBreeds } from "./api_breed_cat";
 // import { createMarkup } from "./markup_breeds_list";
-
+localStorage.clear()
 const select = document.querySelector('.breed-select');
 const catInfo = document.querySelector('.cat-info');
-const errorMessage = document.createElement('p');
-localStorage.clear()
+const loader = document.querySelector('.loader');
+
+
+window.addEventListener('load', () => {
+  setTimeout(() => { loader.remove() }, 1000)
+})
+function removeLoader() {
+  const preLoader = document.querySelector('.loader');
+  setTimeout(() => { preLoader.remove() }, 3000)
+}
+
 
 const API_KEY = 'live_eVFX0N3DgZf8XV7EZFhS9HUEtK1lVasKqGqyQWPZoGDlSDnCwXDvn4ocqwmdZP1e';
-// const API_LINK = 'https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=beng&api_key=REPLACE_ME'
 const BASE_URL = 'https://api.thecatapi.com/v1';
 window.addEventListener('load', onLoadPage);
 function onLoadPage(evt) {
@@ -18,21 +26,15 @@ function onLoadPage(evt) {
     .catch(onErrorPage);
 }
 
-
-
 function fetchBreeds() {
-  // fetch(`${BASE_URL}/images/search?limit=10&breed_ids=beng&api_key=${API_KEY}`);
   return fetch('https://api.thecatapi.com/v1/breeds')
     .then(resp => {
       if (!resp.ok) {
-        // throw new Error(resp.statusText)
-        // document.body.innerHTML = createMarkupError();
-        
+        throw new Error(resp.statusText)
       }
       return resp.json();
     });
 };
-
 
 function createMarkup(arr) {
   return arr.map(item => `<option value="${item.id}">${item.name}</option>`).join('');
@@ -52,15 +54,20 @@ function onSelect(evt) {
   )
 }
 
+
+
 function fetchCat(breed) {
-  return fetch(`${BASE_URL}AAA/images/search?breed_ids=${breed}&api_key=${API_KEY}`)
+  select.insertAdjacentHTML("beforebegin", '<span class="loader"></span>')
+  return fetch(`${BASE_URL}/images/search?breed_ids=${breed}&api_key=${API_KEY}`)
     .then(resp => {
       if (!resp.ok) {
-        // throw new Error(resp.statusText)
         catInfo.innerHTML = "<p>Oops! Something went wrong! Try reloading the page!</p>";
       }
+      removeLoader()
       return resp.json();
-    }).catch(onErrorBreed);
+    }).catch(onErrorBreed)
+    .finally(
+    );
 }
 
 function createMarkupBreed(url, name, description, temperament) {
@@ -76,12 +83,15 @@ function createMarkupBreed(url, name, description, temperament) {
     </div>`
   )
 }
+
 function onErrorPage() {
-  document.body.innerHTML = `<p class="error">Oops! Something went wrong! Try reloading the page!</p>`;
+  document.body.innerHTML = `<p class="error" >Oops! Something went wrong! Try reloading the page!</p>`;
 }
+
 function onErrorBreed() {
-  catInfo.innerHTML = `<p class="error">Oops! Something went wrong! Try reloading the page!</p>`;
+  catInfo.innerHTML = `<p class="error" >Oops! Something went wrong! Try reloading the page!</p>`;
 }
+
 
 
 

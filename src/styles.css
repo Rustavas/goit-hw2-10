@@ -1,3 +1,11 @@
+.cat-info > p {
+  font-size: 20px;
+  color: red;
+}
+.error {
+  font-size: 20px;
+  color: red;
+}
 body {
   background-color: #ccc;
 }
@@ -43,33 +51,31 @@ body {
   margin: 0;
   font-size: 16;
 }
-.error {
-  font-size: 20;
-  color: red;
-}
+
 .loader {
-  width: 48px;
-  height: 48px;
+  width: 200px;
+  height: 200px;
   display: flex;
   position: absolute;
   left: 50%;
   top: 50%;
-  background-color: inherit;
+  transform: translate(-50%, -50%);
+  background-color: transparent;
 }
-.loader::after{
+.loader::after {
   content: '';
   box-sizing: border-box;
-  width: 48px;
-  height: 48px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
-  border: 2px solid #fff;
+  border: 4px solid red;
   position: absolute;
   left: 0;
   top: 0;
-  animation: animloader 2s linear infinite;
+  animation: animloader 1s linear infinite;
 }
 .loader::after {
-  animation-delay: 1s;
+  animation-delay: 0, 2s;
 }
 
 @keyframes animloader {
