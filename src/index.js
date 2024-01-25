@@ -1,6 +1,6 @@
 // import { fetchBreeds } from "./api_breed_cat";
 // import { createMarkup } from "./markup_breeds_list";
-localStorage.clear()
+// localStorage.clear()
 const select = document.querySelector('.breed-select');
 const catInfo = document.querySelector('.cat-info');
 const loader = document.querySelector('.loader');
@@ -11,7 +11,7 @@ window.addEventListener('load', () => {
 })
 function removeLoader() {
   const preLoader = document.querySelector('.loader');
-  setTimeout(() => { preLoader.remove() }, 3000)
+  setTimeout(() => { preLoader.remove() }, 500)
 }
 
 
@@ -91,7 +91,6 @@ function onErrorPage() {
 function onErrorBreed() {
   catInfo.innerHTML = `<p class="error" >Oops! Something went wrong! Try reloading the page!</p>`;
 }
-
 
 
 
